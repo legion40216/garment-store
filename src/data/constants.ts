@@ -1,6 +1,6 @@
-import { type ProductSize, SIZES } from "@/data/sizes";
-import { getHighestPrice, getLowestPrice } from "@/utils/product-variants";
-import type { ProductCategorySlug } from "./categories";
+import { SIZES } from "@/data/sizes";
+import { getFinalPrice } from "@/utils/product-helpers";
+import { categories, type ProductCategorySlug } from "./categories";
 import { products } from "./data";
 
 export const sortOptions = [
@@ -17,33 +17,28 @@ export const CURRENCY = "USD";
 // Price slider step (whole currency units)
 export const PRICE_STEP = 5;
 
-// Lowest / highest price (rounded to PRICE_STEP) for the products that match
-// a category and/or size. Used as the price slider's range.
+// Lowest / highest final price (rounded out to PRICE_STEP) for the products in
+// a category. Used as the price slider's range.
 export function getPriceBounds({
   category,
-  size,
 }: {
   category?: ProductCategorySlug | "all";
-  size?: ProductSize;
 }): { min: number; max: number } {
-  const matching = products.filter((product) => {
-    if (category && category !== "all" && product.category !== category) {
-      return false;
-    }
-    if (size && !product.sizes.some((option) => option.size === size)) {
-      return false;
-    }
-    return true;
-  });
+  const matching = products.filter(
+    (product) =>
+      !category || category === "all" || product.category === category,
+  );
 
   if (matching.length === 0) return { min: 0, max: PRICE_STEP };
 
-  const lowest = Math.min(...matching.map((p) => getLowestPrice(p, size)));
-  const highest = Math.max(...matching.map((p) => getHighestPrice(p, size)));
+  const prices = matching.map(getFinalPrice);
 
   return {
-    min: Math.floor(lowest / PRICE_STEP) * PRICE_STEP,
-    max: Math.max(PRICE_STEP, Math.ceil(highest / PRICE_STEP) * PRICE_STEP),
+    min: Math.floor(Math.min(...prices) / PRICE_STEP) * PRICE_STEP,
+    max: Math.max(
+      PRICE_STEP,
+      Math.ceil(Math.max(...prices) / PRICE_STEP) * PRICE_STEP,
+    ),
   };
 }
 
@@ -55,4 +50,12 @@ export const availableSizes = SIZES.filter((size) =>
   products.some((product) =>
     product.sizes.some((option) => option.size === size),
   ),
+);
+
+// "All" plus every category that has at least one product, so the filters and
+// home page never offer a category that would only show an empty page.
+export const availableCategories = categories.filter(
+  (category) =>
+    category.slug === "all" ||
+    products.some((product) => product.category === category.slug),
 );

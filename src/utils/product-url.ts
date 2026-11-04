@@ -1,16 +1,8 @@
 import type { ProductSize } from "@/types/types";
 
-// "/products/classic-fleece-hoodie" or "...?size=M&color=Orange"
-export function getProductPath(
-  slug: string,
-  selection?: { size?: ProductSize; color?: string },
-): string {
-  const params = new URLSearchParams();
-  if (selection?.size) params.set("size", selection.size);
-  if (selection?.color) params.set("color", selection.color);
-
-  const query = params.toString();
-  return query ? `/products/${slug}?${query}` : `/products/${slug}`;
+// "/products/red-puffer-coat" or "/products/red-puffer-coat?size=M"
+export function getProductPath(slug: string, size?: ProductSize): string {
+  return size ? `/products/${slug}?size=${size}` : `/products/${slug}`;
 }
 
 export function firstParam(value: string | string[] | undefined) {

@@ -2,10 +2,9 @@ import type { CategorySlug, SizeFilter } from "@/schema";
 import type { ProductType } from "@/types/types";
 import {
   getFinalPrice,
-  getLowestPrice,
   isProductInStock,
   isSizeInStock,
-} from "@/utils/product-variants";
+} from "@/utils/product-helpers";
 
 export interface ProductFilters {
   categoryParam: CategorySlug;
@@ -47,19 +46,17 @@ export function filterProducts(
 
     if (featuredParam && !product.isFeatured) return false;
 
-    // With a size filter, price and stock are judged for that size only.
+    const price = getFinalPrice(product);
+    if (price < minPrice || price > maxPrice) return false;
+
+    // With a size filter, the product must come in that size (and, with
+    // "in stock only", have that size in stock).
     if (sizeParam) {
       const option = product.sizes.find((o) => o.size === sizeParam);
       if (!option) return false;
 
-      const price = getFinalPrice(option);
-      if (price < minPrice || price > maxPrice) return false;
-
       return !inStockParam || isSizeInStock(option);
     }
-
-    const price = getLowestPrice(product);
-    if (price < minPrice || price > maxPrice) return false;
 
     return !inStockParam || isProductInStock(product);
   });
