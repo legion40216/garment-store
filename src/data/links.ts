@@ -3,7 +3,6 @@
 export const navLinks = [
   { href: "/", label: "Home" },
   { href: "/products", label: "Products" },
-  { href: "/categories", label: "Categories" },
 ];
 
 export const footerLinks = [
@@ -12,7 +11,6 @@ export const footerLinks = [
     links: [
       { href: "/", label: "Home" },
       { href: "/products", label: "Products" },
-      { href: "/categories", label: "Categories" },
     ],
   },
 ];

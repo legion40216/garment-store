@@ -35,18 +35,13 @@ export default function CartItem({ item, onNavigate }: CartItemProps) {
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
             <Link
-              href={getProductPath(item.slug, {
-                size: item.size,
-                color: item.color,
-              })}
+              href={getProductPath(item.slug, item.size)}
               onClick={onNavigate}
               className="block truncate font-medium hover:underline"
             >
               {item.name}
             </Link>
-            <p className="text-xs text-muted-foreground">
-              {item.color} · {item.size}
-            </p>
+            <p className="text-xs text-muted-foreground">Size {item.size}</p>
           </div>
 
           <Button

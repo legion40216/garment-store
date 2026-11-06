@@ -1,76 +1,49 @@
 "use client";
-import React, { useState } from "react";
+
+import { useState } from "react";
+
+import HeadingState from "@/components/global-ui/heading-state";
 import { Button } from "@/components/ui/button";
+import type { ProductsType } from "@/types/types";
 import LatestProductCarousel from "../components/latest-product-carousel";
 
-interface Category {
-  id: number;
-  title: string;
-}
-
-interface Product {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  image: string;
-  category: string;
-  inStock: boolean;
-  new: boolean;
-  discount: number;
-}
-
-interface LatestProductSectionProps {
-  collectionData: Category[];
-  products: Product[];
-}
+type CategoryTab = { name: string; slug: string };
 
 export default function LatestProductSection({
-  collectionData,
+  categories,
   products,
-}: LatestProductSectionProps) {
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+}: {
+  categories: CategoryTab[];
+  products: ProductsType;
+}) {
+  const [selected, setSelected] = useState("all");
 
-  const handleCategory = (category: string) => {
-    setSelectedCategory(category);
-    const filtered = products.filter((item) => item.category === category);
-    setFilteredProducts(filtered);
-  };
-
-  const handleAll = () => {
-    setSelectedCategory(null);
-    setFilteredProducts(products);
-  };
+  const visibleProducts =
+    selected === "all"
+      ? products
+      : products.filter((product) => product.category === selected);
 
   return (
-    <div className="space-y-4">
-      {/* Categories */}
-      <div className="flex gap-1 justify-evenly items-center flex-wrap">
-        <Button
-          variant="ghost"
-          onClick={handleAll}
-          className={selectedCategory === null ? "bg-primary text-white" : ""}
-        >
-          All
-        </Button>
+    <section className="space-y-4">
+      <HeadingState
+        title="Latest arrivals"
+        subtitle="Fresh pieces for the season."
+      />
 
-        {collectionData.map((item) => (
+      <div className="flex flex-wrap items-center gap-1">
+        {categories.map((category) => (
           <Button
-            key={item.id}
-            variant="ghost"
-            onClick={() => handleCategory(item.title)}
-            className={selectedCategory === item.title ? "bg-primary text-white" : ""}
+            key={category.slug}
+            variant={selected === category.slug ? "default" : "ghost"}
+            aria-pressed={selected === category.slug}
+            onClick={() => setSelected(category.slug)}
           >
-            {item.title}
+            {category.name}
           </Button>
         ))}
       </div>
 
-      {/* Carousel */}
-      <div className="w-screen max-w-full min-w-[300px]">
-        <LatestProductCarousel data={filteredProducts} />
-      </div>
-    </div>
+      <LatestProductCarousel data={visibleProducts} />
+    </section>
   );
 }

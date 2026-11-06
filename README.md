@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Garment Store
 
-## Getting Started
+A simple seasonal clothing store built with Next.js (App Router), React,
+Tailwind CSS v4 and shadcn/ui (Base UI). Products live in a typed data file, so
+there is no database or backend to set up.
 
-First, run the development server:
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Command          | What it does                      |
+| ---------------- | --------------------------------- |
+| `npm run dev`    | Start the dev server              |
+| `npm run build`  | Production build                  |
+| `npm run start`  | Run the production build          |
+| `npm run lint`   | Lint and format check (Biome)     |
+| `npm run format` | Format all files (Biome)          |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+> This project uses a recent Next.js with Cache Components turned on. Anything
+> that reads the request (`searchParams`, `cookies()`) has to sit inside
+> `<Suspense>`. See `AGENTS.md` and `node_modules/next/dist/docs/`.
 
-## Learn More
+## Pages
 
-To learn more about Next.js, take a look at the following resources:
+| Route              | What it shows                                             |
+| ------------------ | --------------------------------------------------------- |
+| `/`                | Banner carousel, latest arrivals by season, shop CTA      |
+| `/products`        | Product grid with filters (the filters live in the URL)   |
+| `/products/[slug]` | Product details, size picker, add to cart                 |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The cart (navbar) is stored in the browser's localStorage. Search opens from the
+navbar and sends you to `/products?q=...`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Editing the products
 
-## Deploy on Vercel
+Everything about the catalogue is in `src/data`:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `data.ts`: the products. Each has one image, one price, an optional
+  percentage `discount`, and a stock count per size.
+- `categories.ts`: the seasons used as categories. A category with no products
+  is hidden from the filters automatically.
+- `sizes.ts`: the allowed sizes (`S`, `M`, `L`, `XL`).
+- `constants.ts`: currency, sort options and the price slider range.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Product photos go in `public/assets/products` and are referenced from `data.ts`
+as `/assets/products/<file>`.
+
+## Project structure
+
+```
+src/
+  app/(routes)/        Pages, navbar and footer
+  components/ui/       shadcn/ui components (add more with `npx shadcn add`)
+  components/global-ui Shared components (product card, empty state, ...)
+  data/                Products, categories, sizes, nav links, constants
+  features/            Product listing: filters, sorting, grid
+  hooks/               Cart store (zustand), wishlist, URL param helpers
+  schema/              Zod schema that validates the filter URL params
+  utils/               Pricing, filtering, sorting helpers
+```
+
+## Not built yet
+
+- `/checkout`: the cart's Checkout button links here, but the page doesn't exist.
+- Wishlist: `hooks/useWishlist.ts` works but isn't used by any component yet.
+- About and Contact pages (add them to `src/data/links.ts` once they exist).

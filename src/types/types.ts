@@ -3,35 +3,24 @@ import type { ProductSize } from "@/data/sizes";
 
 export type { ProductSize };
 
-// A colour is defined once per product and carries its own photo.
-export type ProductColor = {
-  name: string; // also the key used in `ProductSizeOption.stock`
-  code: string; // hex, used for the swatch
-  image: string;
-};
-
-// One row per size. Price is per size; stock is per size + colour.
+// One row per size the product is made in.
 export type ProductSizeOption = {
   size: ProductSize;
-  price: number; // list price in CURRENCY
-  discount?: number; // amount off `price` (not a percentage); omit for none
-  // colour name -> units in stock.
-  //   0           = sold out
-  //   key missing = this colour isn't made in this size
-  stock: Record<string, number>;
+  stock: number; // units in stock; 0 = sold out in this size
 };
 
 export type ProductType = {
   id: string;
-  slug: string;
+  slug: string; // used in the URL: /products/<slug>
   name: string;
   description: string;
   category: ProductCategorySlug;
-  colors: ProductColor[]; // first colour is the default / card image
+  image: string; // path under /public, e.g. "/assets/products/red-jacket.jpeg"
+  price: number; // list price in CURRENCY
+  discount: number; // percent off `price` (0-100); 0 for no discount
   sizes: ProductSizeOption[];
   isNew: boolean;
   isFeatured: boolean;
-  isArchived: boolean; // archived products are hidden everywhere
   createdAt: string; // ISO date string, used for "newest" / "oldest" sort
 };
 
