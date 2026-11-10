@@ -39,7 +39,6 @@ async function Listing({
       newParam={params.new}
       saleParam={params.sale}
       inStockParam={params.inStock}
-      queryParam={params.q}
       headingTitle={headingTitle}
     />
   );

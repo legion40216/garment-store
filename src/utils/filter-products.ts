@@ -16,7 +16,6 @@ export interface ProductFilters {
   newParam: boolean;
   saleParam: boolean;
   inStockParam: boolean;
-  queryParam?: string;
 }
 
 export function filterProducts(
@@ -30,22 +29,10 @@ export function filterProducts(
     newParam,
     saleParam,
     inStockParam,
-    queryParam = "",
   }: ProductFilters,
 ): ProductType[] {
-  const query = queryParam.toLowerCase().trim();
-
   return products.filter((product) => {
     if (categoryParam !== "all" && product.category !== categoryParam) {
-      return false;
-    }
-
-    if (
-      query &&
-      ![product.name, product.description, product.category].some((value) =>
-        value.toLowerCase().includes(query),
-      )
-    ) {
       return false;
     }
 
