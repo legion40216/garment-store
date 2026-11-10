@@ -22,6 +22,8 @@ export interface FilterControlsProps {
   minPrice: number;
   maxPrice: number;
   featuredParam: boolean;
+  newParam: boolean;
+  saleParam: boolean;
   inStockParam: boolean;
   showCategoryFilter?: boolean;
   onChange?: () => void;
@@ -34,6 +36,8 @@ export function countActiveFilters({
   minPrice,
   maxPrice,
   featuredParam,
+  newParam,
+  saleParam,
   inStockParam,
   showCategoryFilter = true,
   priceBounds,
@@ -43,7 +47,9 @@ export function countActiveFilters({
     (sizeParam ? 1 : 0) +
     (minPrice !== priceBounds.min || maxPrice !== priceBounds.max ? 1 : 0) +
     (inStockParam ? 1 : 0) +
-    (featuredParam ? 1 : 0)
+    (featuredParam ? 1 : 0) +
+    (newParam ? 1 : 0) +
+    (saleParam ? 1 : 0)
   );
 }
 
@@ -54,6 +60,8 @@ export default function FilterControls(props: FilterControlsProps) {
     minPrice,
     maxPrice,
     featuredParam,
+    newParam,
+    saleParam,
     inStockParam,
     showCategoryFilter = true,
     onChange,
@@ -188,6 +196,32 @@ export default function FilterControls(props: FilterControlsProps) {
         />
         <Label htmlFor="featured" className="cursor-pointer font-normal">
           Featured only
+        </Label>
+      </div>
+
+      <div className="flex items-center space-x-3">
+        <Checkbox
+          id="new-arrivals"
+          checked={newParam}
+          onCheckedChange={(checked) =>
+            updateParams({ new: checked ? "true" : null })
+          }
+        />
+        <Label htmlFor="new-arrivals" className="cursor-pointer font-normal">
+          New arrivals only
+        </Label>
+      </div>
+
+      <div className="flex items-center space-x-3">
+        <Checkbox
+          id="on-sale"
+          checked={saleParam}
+          onCheckedChange={(checked) =>
+            updateParams({ sale: checked ? "true" : null })
+          }
+        />
+        <Label htmlFor="on-sale" className="cursor-pointer font-normal">
+          On sale only
         </Label>
       </div>
 

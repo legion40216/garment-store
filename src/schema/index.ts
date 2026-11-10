@@ -53,6 +53,20 @@ const baseSearchParamsSchema = z.object({
     .optional()
     .catch(undefined)
     .transform((value) => value === "true"),
+
+  // ?new=true -> only products marked as new arrivals
+  new: z
+    .enum(["true"])
+    .optional()
+    .catch(undefined)
+    .transform((value) => value === "true"),
+
+  // ?sale=true -> only products with a discount
+  sale: z
+    .enum(["true"])
+    .optional()
+    .catch(undefined)
+    .transform((value) => value === "true"),
 });
 
 // ?minPrice=90&maxPrice=10 would match nothing, so swap an inverted range.

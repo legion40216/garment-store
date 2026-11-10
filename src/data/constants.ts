@@ -14,6 +14,9 @@ export type SortValue = (typeof sortOptions)[number]["value"];
 
 export const CURRENCY = "USD";
 
+// Flat delivery fee added to every order at checkout (in CURRENCY).
+export const SHIPPING_FEE = 5;
+
 // Price slider step (whole currency units)
 export const PRICE_STEP = 5;
 

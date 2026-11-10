@@ -13,4 +13,11 @@ export const footerLinks = [
       { href: "/products", label: "Products" },
     ],
   },
+  {
+    title: "Shop",
+    links: [
+      { href: "/products?new=true", label: "New arrivals" },
+      { href: "/products?sale=true", label: "Sale" },
+    ],
+  },
 ];

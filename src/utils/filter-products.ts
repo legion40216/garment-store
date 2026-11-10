@@ -2,6 +2,7 @@ import type { CategorySlug, SizeFilter } from "@/schema";
 import type { ProductType } from "@/types/types";
 import {
   getFinalPrice,
+  hasDiscount,
   isProductInStock,
   isSizeInStock,
 } from "@/utils/product-helpers";
@@ -12,6 +13,8 @@ export interface ProductFilters {
   minPrice: number;
   maxPrice: number;
   featuredParam: boolean;
+  newParam: boolean;
+  saleParam: boolean;
   inStockParam: boolean;
   queryParam?: string;
 }
@@ -24,6 +27,8 @@ export function filterProducts(
     minPrice,
     maxPrice,
     featuredParam,
+    newParam,
+    saleParam,
     inStockParam,
     queryParam = "",
   }: ProductFilters,
@@ -45,6 +50,8 @@ export function filterProducts(
     }
 
     if (featuredParam && !product.isFeatured) return false;
+    if (newParam && !product.isNew) return false;
+    if (saleParam && !hasDiscount(product)) return false;
 
     const price = getFinalPrice(product);
     if (price < minPrice || price > maxPrice) return false;
