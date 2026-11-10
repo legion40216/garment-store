@@ -1,15 +1,13 @@
-import type { FilterValue, SizeFilter } from "@/schema";
+import type { FilterValue } from "@/schema";
 import type { ProductType } from "@/types/types";
-import { getLowestPrice } from "@/utils/product-variants";
+import { getFinalPrice } from "@/utils/product-helpers";
 
 export function sortProducts(
   products: ProductType[],
   filter: FilterValue,
-  sizeParam?: SizeFilter,
 ): ProductType[] {
   const sorted = [...products];
   const time = (product: ProductType) => new Date(product.createdAt).getTime();
-  const price = (product: ProductType) => getLowestPrice(product, sizeParam);
 
   switch (filter) {
     case "newest":
@@ -17,9 +15,9 @@ export function sortProducts(
     case "oldest":
       return sorted.sort((a, b) => time(a) - time(b));
     case "price_low_high":
-      return sorted.sort((a, b) => price(a) - price(b));
+      return sorted.sort((a, b) => getFinalPrice(a) - getFinalPrice(b));
     case "price_high_low":
-      return sorted.sort((a, b) => price(b) - price(a));
+      return sorted.sort((a, b) => getFinalPrice(b) - getFinalPrice(a));
     default:
       return sorted;
   }

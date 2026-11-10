@@ -6,37 +6,21 @@
 
 @theme inline {
   --font-sans:
-    var(--font-geist-sans),
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial,
-    sans-serif;
+    var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
 
-  --font-serif:
-    var(--font-inter),
-    Georgia,
-    "Times New Roman",
-    Times,
-    serif;
+  --font-serif: var(--font-inter), Georgia, "Times New Roman", Times, serif;
 
   --font-mono:
-    var(--font-geist-mono),
-    "SF Mono",
-    Monaco,
-    "Cascadia Code",
-    "Courier New",
+    var(--font-geist-mono), "SF Mono", Monaco, "Cascadia Code", "Courier New",
     monospace;
 
-  
-/* =========================
+  /* =========================
     Breakpoints
     ========================= */
-/* --breakpoint-sm: 375px; */
+  /* --breakpoint-sm: 375px; */
 
-/* =========================
+  /* =========================
   Text Sizes
   ========================= */
 
@@ -51,7 +35,7 @@
   --text-5xl: 3rem;
   --text-6xl: 3.75rem; */
 
-    /* =========================
+  /* =========================
      Style Guide Colors
      ========================= */
 
@@ -65,7 +49,7 @@
   --color-style-red-500: var(--style-red-500);
   --color-style-green-500: var(--style-green-500);
   --color-style-yellow-400: var(--style-yellow-400);
-  
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
@@ -177,10 +161,10 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-    /* =========================
+  /* =========================
      Text rendering
      ========================= */
-     
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

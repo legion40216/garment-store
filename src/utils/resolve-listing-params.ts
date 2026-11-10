@@ -5,7 +5,7 @@ import {
 } from "@/utils/parseSearchParams";
 
 /**
- * Shared search-param handling for listing pages (/products, /categories).
+ * Shared search-param handling for listing pages (/products).
  *
  * Parses and validates the URL params. If the URL carries an unknown
  * category, redirect to `basePath` (the same page, clean URL) instead of

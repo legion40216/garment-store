@@ -42,10 +42,7 @@ export default async function ProductSection({
     cookieStore.get(GRID_COLUMNS_COOKIE)?.value,
   );
 
-  const priceBounds = getPriceBounds({
-    category: categoryParam,
-    size: sizeParam,
-  });
+  const priceBounds = getPriceBounds({ category: categoryParam });
   const priceRange = clampPriceRange({ minPrice, maxPrice }, priceBounds);
 
   const filterProps = {
@@ -62,7 +59,6 @@ export default async function ProductSection({
   const filteredAndSorted = sortProducts(
     filterProducts(products, { ...filterProps, queryParam }),
     filterParam,
-    sizeParam,
   );
 
   return (

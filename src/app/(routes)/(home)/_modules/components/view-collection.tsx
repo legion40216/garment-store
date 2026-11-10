@@ -1,18 +1,16 @@
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import React from 'react'
+import Link from "next/link";
+
+import { buttonVariants } from "@/components/ui/button";
 
 export default function ViewCollection() {
   return (
-    <div className='text-center space-y-5 py-[3rem] bg-gray-300'>
-        <p className=" font-bold text-3xl">
-            #Brandname ON INSTAGRAM
-        </p>
-        <Button asChild variant={"default"} size={"lg"}>
-            <Link href="/collection">
-                View Collection
-            </Link>
-        </Button>
-    </div>
-  )
+    <section className="space-y-5 rounded-lg bg-muted py-12 text-center">
+      <p className="text-3xl font-bold">
+        Find something you&apos;ll wear on repeat
+      </p>
+      <Link href="/products" className={buttonVariants({ size: "lg" })}>
+        Shop all products
+      </Link>
+    </section>
+  );
 }

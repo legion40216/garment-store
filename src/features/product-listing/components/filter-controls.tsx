@@ -7,8 +7,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Slider } from "@/components/ui/slider";
-import { categories } from "@/data/categories";
-import { availableSizes, PRICE_STEP } from "@/data/constants";
+import {
+  availableCategories,
+  availableSizes,
+  PRICE_STEP,
+} from "@/data/constants";
 import { useUpdateSearchParams } from "@/hooks/use-update-search-params";
 import type { CategorySlug, SizeFilter } from "@/schema";
 import { formatter } from "@/utils/formatters";
@@ -104,7 +107,7 @@ export default function FilterControls(props: FilterControlsProps) {
               updateParams({ category: slug === "all" ? null : String(slug) })
             }
           >
-            {categories.map((category) => (
+            {availableCategories.map((category) => (
               <div key={category.slug} className="flex items-center space-x-2">
                 <RadioGroupItem
                   value={category.slug}

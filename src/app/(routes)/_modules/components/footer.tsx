@@ -18,7 +18,7 @@ export default function Footer() {
           href="/"
         >
           <Image
-            src="/assets/logo.png"
+            src="/assets/logo.svg"
             alt=""
             width={36}
             height={36}

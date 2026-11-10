@@ -1,96 +1,107 @@
 "use client";
-import banner1 from "/public/images/banners/Web_Banne2.png";
-import banner2 from "/public/images/banners/Web_Banner1.png";
-import { Button } from "@/components/ui/button";
+
+import Autoplay from "embla-carousel-autoplay";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+
 import {
   Carousel,
-  CarouselApi,
+  type CarouselApi,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
-import { useCallback, useEffect, useRef, useState } from "react";
+
+// Both banners are 1880x720.
+const banners = [
+  {
+    src: "/assets/banners/Web_Banner1.png",
+    alt: "Summer clearance sale, up to 50% off",
+  },
+  {
+    src: "/assets/banners/Web_Banne2.png",
+    alt: "The Fall Collection, autumn arrivals now available",
+  },
+];
 
 export function BannerCarousel() {
-  const banners = [{ img: banner1 }, { img: banner2 }];
-  const [carouselAPI, setCarouselAPI] = useState<CarouselApi | null>(null);
+  const [api, setApi] = useState<CarouselApi>();
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
-  const autoplay = useRef(Autoplay({ delay: 2500, stopOnInteraction: false }));
-
-  const onSelect = useCallback(() => {
-    if (!carouselAPI) return;
-    setSelectedIndex(carouselAPI.selectedScrollSnap());
-  }, [carouselAPI]);
-
-  const scrollTo = (index: number) => {
-    if (!carouselAPI) return;
-    carouselAPI.scrollTo(index);
-  };
+  const [slideCount, setSlideCount] = useState(0);
+  const [autoplay] = useState(() =>
+    Autoplay({ delay: 4000, stopOnInteraction: false }),
+  );
 
   useEffect(() => {
-    if (!carouselAPI) return;
+    if (!api) return;
 
-    onSelect();
-    setScrollSnaps(carouselAPI.scrollSnapList());
-    carouselAPI.on("select", onSelect);
-  }, [carouselAPI, onSelect]);
+    const update = () => {
+      setSlideCount(api.scrollSnapList().length);
+      setSelectedIndex(api.selectedScrollSnap());
+    };
+
+    update();
+    api.on("select", update);
+    api.on("reInit", update);
+
+    return () => {
+      api.off("select", update);
+      api.off("reInit", update);
+    };
+  }, [api]);
 
   return (
-    <div className="relative">
+    <section aria-label="Promotions">
       <Carousel
-        plugins={[autoplay.current]}
-        opts={{ loop: true, align: "center" }}
-        setApi={setCarouselAPI}
+        plugins={[autoplay]}
+        opts={{ loop: true }}
+        setApi={setApi}
         className="relative"
       >
-        <CarouselContent>
-          {banners.map((banner, index) => (
-            <CarouselItem
-              key={index}
-              className="flex justify-center"
-              onMouseEnter={() => autoplay.current.stop()}
-              onMouseLeave={() => autoplay.current.play()}
-            >
-              {/* Option 1: Add rounded corners to the container */}
-              <div className="overflow-hidden rounded-lg">
-                <img
-                  src={banner.img.src}
-                  alt="banner"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              
-              {/* Option 2: Add rounded corners directly to the image */}
-              {/* <div>
-                <img
-                  src={banner.img.src}
-                  alt="banner"
-                  className="w-full h-full object-cover rounded-lg"
-                />
-              </div> */}
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <>
-          <CarouselPrevious className="hidden sm:flex absolute left-2 top-1/2 -translate-y-1/2" />
-          <CarouselNext className="hidden sm:flex absolute right-2 top-1/2 -translate-y-1/2" />
-        </>
+        {/* biome-ignore lint/a11y/noStaticElementInteractions: hover only pauses the autoplay, it is not a control */}
+        <div
+          onMouseEnter={() => autoplay.stop()}
+          onMouseLeave={() => autoplay.play()}
+        >
+          <CarouselContent>
+            {banners.map((banner, index) => (
+              <CarouselItem key={banner.src}>
+                <div className="overflow-hidden rounded-lg">
+                  <Image
+                    src={banner.src}
+                    alt={banner.alt}
+                    width={1880}
+                    height={720}
+                    sizes="(min-width: 1200px) 1200px, 100vw"
+                    priority={index === 0}
+                    className="h-auto w-full"
+                  />
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </div>
+
+        <CarouselPrevious className="absolute top-1/2 left-2 hidden -translate-y-1/2 sm:flex" />
+        <CarouselNext className="absolute top-1/2 right-2 hidden -translate-y-1/2 sm:flex" />
       </Carousel>
-      <div className="flex justify-center mt-4 space-x-2">
-        {scrollSnaps.map((_, index) => (
-          <Button
+
+      <div className="mt-4 flex justify-center gap-2">
+        {Array.from({ length: slideCount }, (_, index) => (
+          <button
+            // biome-ignore lint/suspicious/noArrayIndexKey: dots are positional and never reorder
             key={index}
-            onClick={() => scrollTo(index)}
-            size="icon"
-            className={`w-2 h-2 rounded-full ${
-              selectedIndex === index ? "bg-primary" : "bg-gray-300"
+            type="button"
+            aria-label={`Go to slide ${index + 1}`}
+            aria-current={selectedIndex === index}
+            onClick={() => api?.scrollTo(index)}
+            className={`size-2 rounded-full transition-colors ${
+              selectedIndex === index ? "bg-primary" : "bg-muted-foreground/30"
             }`}
           />
         ))}
       </div>
-    </div>
+    </section>
   );
 }
