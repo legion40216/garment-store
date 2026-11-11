@@ -18,11 +18,12 @@ export default async function ProductSection({
   minPrice,
   maxPrice,
   featuredParam,
+  newParam,
+  saleParam,
   inStockParam,
   showCategoryFilter = true,
   headingTitle = "Collections",
   headingSubtitle = "Find something you'll wear on repeat.",
-  queryParam = "",
 }: {
   categoryParam: CategorySlug;
   filterParam: FilterValue;
@@ -30,11 +31,12 @@ export default async function ProductSection({
   minPrice: number;
   maxPrice: number;
   featuredParam: boolean;
+  newParam: boolean;
+  saleParam: boolean;
   inStockParam: boolean;
   showCategoryFilter?: boolean;
   headingTitle?: string;
   headingSubtitle?: string;
-  queryParam?: string;
 }) {
   // Read on the server so the first paint already uses the saved layout.
   const cookieStore = await cookies();
@@ -51,26 +53,21 @@ export default async function ProductSection({
     minPrice: priceRange.minPrice,
     maxPrice: priceRange.maxPrice,
     featuredParam,
+    newParam,
+    saleParam,
     inStockParam,
     showCategoryFilter,
     priceBounds,
   };
 
   const filteredAndSorted = sortProducts(
-    filterProducts(products, { ...filterProps, queryParam }),
+    filterProducts(products, filterProps),
     filterParam,
   );
 
   return (
     <section className="space-y-6">
-      <HeadingState
-        title={queryParam ? "Search" : headingTitle}
-        subtitle={
-          queryParam
-            ? `Results for \u201c${queryParam}\u201d.`
-            : headingSubtitle
-        }
-      />
+      <HeadingState title={headingTitle} subtitle={headingSubtitle} />
 
       <div className="flex flex-col gap-6 md:flex-row">
         <FilterSidebar {...filterProps} />

@@ -19,8 +19,6 @@ const sortValues = sortOptions.map((option) => option.value) as [
 // Every param falls back to a safe default instead of throwing, so a hand-edited
 // URL never breaks the page.
 const baseSearchParamsSchema = z.object({
-  q: z.string().trim().max(80).catch(""),
-
   // "all" means no category filter
   category: z.enum(categorySlugs).catch("all"),
 
@@ -49,6 +47,20 @@ const baseSearchParamsSchema = z.object({
     .transform((value) => value === "true"),
 
   featured: z
+    .enum(["true"])
+    .optional()
+    .catch(undefined)
+    .transform((value) => value === "true"),
+
+  // ?new=true -> only products marked as new arrivals
+  new: z
+    .enum(["true"])
+    .optional()
+    .catch(undefined)
+    .transform((value) => value === "true"),
+
+  // ?sale=true -> only products with a discount
+  sale: z
     .enum(["true"])
     .optional()
     .catch(undefined)

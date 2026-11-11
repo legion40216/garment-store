@@ -19,6 +19,15 @@ async function Listing({
 }) {
   const params = await resolveListingParams(searchParams, "/products");
 
+  // Linking to ?new=true or ?sale=true on its own gives a matching page title,
+  // like a dedicated "New arrivals" or "Sale" collection.
+  const headingTitle =
+    params.new && !params.sale
+      ? "New arrivals"
+      : params.sale && !params.new
+        ? "Sale"
+        : "Products";
+
   return (
     <ProductSection
       categoryParam={params.category}
@@ -27,9 +36,10 @@ async function Listing({
       minPrice={params.minPrice}
       maxPrice={params.maxPrice}
       featuredParam={params.featured}
+      newParam={params.new}
+      saleParam={params.sale}
       inStockParam={params.inStock}
-      queryParam={params.q}
-      headingTitle="Products"
+      headingTitle={headingTitle}
     />
   );
 }

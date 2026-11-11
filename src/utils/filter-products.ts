@@ -2,6 +2,7 @@ import type { CategorySlug, SizeFilter } from "@/schema";
 import type { ProductType } from "@/types/types";
 import {
   getFinalPrice,
+  hasDiscount,
   isProductInStock,
   isSizeInStock,
 } from "@/utils/product-helpers";
@@ -12,8 +13,9 @@ export interface ProductFilters {
   minPrice: number;
   maxPrice: number;
   featuredParam: boolean;
+  newParam: boolean;
+  saleParam: boolean;
   inStockParam: boolean;
-  queryParam?: string;
 }
 
 export function filterProducts(
@@ -24,27 +26,19 @@ export function filterProducts(
     minPrice,
     maxPrice,
     featuredParam,
+    newParam,
+    saleParam,
     inStockParam,
-    queryParam = "",
   }: ProductFilters,
 ): ProductType[] {
-  const query = queryParam.toLowerCase().trim();
-
   return products.filter((product) => {
     if (categoryParam !== "all" && product.category !== categoryParam) {
       return false;
     }
 
-    if (
-      query &&
-      ![product.name, product.description, product.category].some((value) =>
-        value.toLowerCase().includes(query),
-      )
-    ) {
-      return false;
-    }
-
     if (featuredParam && !product.isFeatured) return false;
+    if (newParam && !product.isNew) return false;
+    if (saleParam && !hasDiscount(product)) return false;
 
     const price = getFinalPrice(product);
     if (price < minPrice || price > maxPrice) return false;
