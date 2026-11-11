@@ -6,10 +6,10 @@
 
 @theme inline {
   --font-sans:
-    var(--font-poppins), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, "Helvetica Neue", Arial, sans-serif;
 
-  --font-serif: var(--font-poppins), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif: var(--font-inter), Georgia, "Times New Roman", Times, serif;
 
   --font-mono:
     var(--font-geist-mono), "SF Mono", Monaco, "Cascadia Code", "Courier New",
@@ -52,6 +52,7 @@
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -133,7 +134,7 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.27 0.08 255);
+  --primary: oklch(0.205 0 0);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -150,7 +151,7 @@
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
-  --radius: 0.4rem;
+  --radius: 0.625rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -184,7 +185,7 @@
   --style-neutral-500: hsl(240 3% 46%);
   --style-neutral-400: hsl(240 1% 59%);
   --style-neutral-0: hsl(0 0% 100%);
-  --style-blue-600: hsl(212 100% 18%);
+  --style-blue-600: hsl(214 100% 55%);
   --style-blue-400: hsl(210 100% 65%);
   --style-red-500: hsl(354 63% 57%);
   --style-green-500: hsl(140 63% 57%);
@@ -210,14 +211,6 @@
   h4,
   h5,
   h6 {
-    @apply font-sans;
-  }
-
-  a {
-    text-underline-offset: 0.2em;
-  }
-
-  button {
-    cursor: pointer;
+    @apply font-serif;
   }
 }

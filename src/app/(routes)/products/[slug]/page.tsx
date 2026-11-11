@@ -99,8 +99,8 @@ export default async function ProductPage({
         </BreadcrumbList>
       </Breadcrumb>
 
-      <div className="mx-auto grid max-w-5xl gap-8 py-4 sm:grid-cols-[minmax(0,350px)_minmax(0,1fr)] sm:items-center sm:gap-12 lg:gap-16">
-        <div className="relative aspect-[4/5] overflow-hidden bg-muted">
+      <div className="grid gap-8 sm:grid-cols-2">
+        <div className="relative aspect-4/5 overflow-hidden rounded-lg bg-muted">
           <Image
             src={product.image}
             alt={product.name}
@@ -125,17 +125,17 @@ export default async function ProductPage({
           )}
         </div>
 
-        <div className="space-y-6 px-1 py-2 sm:py-8">
-          <div className="space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+        <div className="space-y-6">
+          <div className="space-y-2">
+            <p className="text-sm font-semibold text-muted-foreground uppercase">
               {categoryName}
             </p>
-            <h1 className="text-2xl font-semibold leading-tight text-neutral-900 sm:text-3xl">{product.name}</h1>
-            <p className="max-w-lg text-sm leading-7 text-muted-foreground">{product.description}</p>
+            <h1 className="text-4xl font-bold">{product.name}</h1>
+            <p className="text-muted-foreground">{product.description}</p>
           </div>
 
           <p className="flex items-baseline gap-3">
-            <span className="text-xl font-semibold text-primary">
+            <span className="text-2xl font-bold">
               {formatter.format(getFinalPrice(product))}
             </span>
             {hasDiscount(product) && (

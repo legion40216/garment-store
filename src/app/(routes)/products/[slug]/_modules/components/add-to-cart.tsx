@@ -113,7 +113,7 @@ export default function AddToCart({
         <Button
           type="button"
           size="lg"
-          className="flex-1"
+          className="h-12 min-h-12 flex-1 text-sm font-semibold uppercase tracking-wide"
           disabled={stock === 0 || inCart}
           onClick={handleAdd}
         >
