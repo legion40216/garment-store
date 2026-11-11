@@ -16,9 +16,8 @@ import { getProductPath } from "@/utils/product-url";
 type ProductCardProps = {
   product: ProductType;
   // When a size filter is active the card links to that size and judges
-  // "sold out" for that size only.
+  // sold-out status for that size only.
   selectedSize?: ProductSize;
-  // Passed to next/image so the browser downloads a size that fits the grid.
   sizes?: string;
 };
 
@@ -35,15 +34,15 @@ export default function ProductCard({
   return (
     <Link
       href={getProductPath(product.slug, selectedSize)}
-      className="group block overflow-hidden rounded-lg border transition-shadow duration-200 hover:shadow-lg"
+      className="group relative block min-w-0 overflow-hidden rounded-lg bg-muted"
     >
-      <div className="relative aspect-2/3 overflow-hidden bg-muted">
+      <div className="relative aspect-[4/5] overflow-hidden">
         <Image
           src={product.image}
           alt={product.name}
           fill
           sizes={sizes}
-          className={`object-cover transition-transform duration-300 group-hover:scale-105 ${
+          className={`object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04] ${
             inStock ? "" : "opacity-60"
           }`}
         />
@@ -51,41 +50,39 @@ export default function ProductCard({
         {hasDiscount(product) && (
           <Badge
             variant="destructive"
-            className="absolute top-2 left-2 z-10 px-2 py-1 text-xs"
+            className="absolute left-3 top-3 z-10 rounded-sm px-2 py-1 text-[10px] font-semibold uppercase tracking-wide"
           >
             -{product.discount}%
           </Badge>
         )}
 
         {product.isNew && (
-          <Badge className="absolute top-2 right-2 z-10 bg-blue-600 px-3 py-1 text-xs text-white">
-            NEW
+          <Badge className="absolute right-3 top-3 z-10 rounded-sm bg-primary px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary-foreground">
+            New
           </Badge>
         )}
 
         {!inStock && (
-          <Badge
-            variant="secondary"
-            className="absolute bottom-2 left-2 z-10 px-2 py-1 text-xs"
-          >
-            Sold out
-          </Badge>
-        )}
-      </div>
-
-      <div className="space-y-1 p-2 text-center">
-        <p className="truncate text-sm font-medium">{product.name}</p>
-
-        <p className="flex items-baseline justify-center gap-2">
-          <span className="text-base font-bold">
-            {formatter.format(getFinalPrice(product))}
-          </span>
-          {hasDiscount(product) && (
-            <span className="text-xs text-muted-foreground line-through">
-              {formatter.format(product.price)}
+          <div className="absolute inset-0 z-10 grid place-items-center bg-white/45">
+            <span className="border border-primary/20 bg-white/95 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-primary">
+              Sold out
             </span>
-          )}
-        </p>
+          </div>
+        )}
+
+        <div className="absolute inset-x-0 bottom-0 z-20 bg-white/90 px-3 py-3 text-center backdrop-blur-[2px]">
+          <p className="truncate text-xs font-normal text-neutral-800 sm:text-sm">
+            {product.name}
+          </p>
+          <p className="mt-1 flex items-baseline justify-center gap-2 text-sm font-semibold text-primary">
+            <span>{formatter.format(getFinalPrice(product))}</span>
+            {hasDiscount(product) && (
+              <span className="text-xs font-normal text-neutral-500 line-through">
+                {formatter.format(product.price)}
+              </span>
+            )}
+          </p>
+        </div>
       </div>
     </Link>
   );

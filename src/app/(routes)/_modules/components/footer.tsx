@@ -11,10 +11,10 @@ async function CurrentYear() {
 
 export default function Footer() {
   return (
-    <div className="grid place-items-center gap-6 rounded-md bg-muted p-4 text-center sm:grid-cols-4 md:place-items-start">
+    <div className="grid gap-8 bg-[#171717] px-6 py-10 text-center text-white sm:grid-cols-2 sm:text-left lg:grid-cols-[1fr_1fr_auto] lg:items-start lg:gap-12 lg:px-10">
       <div className="space-y-4">
         <Link
-          className="flex items-center justify-center gap-2 md:justify-start"
+          className="flex items-center justify-center gap-3 sm:justify-start"
           href="/"
         >
           <Image
@@ -22,14 +22,14 @@ export default function Footer() {
             alt=""
             width={36}
             height={36}
-            className="size-6"
+            className="size-8 brightness-0 invert"
           />
-          <span className="hidden text-base font-medium tracking-wider sm:block">
-            Garment Store
+          <span className="text-base font-semibold tracking-[0.12em]">
+            GARMENT STORE
           </span>
         </Link>
 
-        <div className="space-y-1 text-sm text-muted-foreground">
+        <div className="space-y-1 text-xs text-white/60">
           <p>
             &copy; <CurrentYear /> Garment Store.
           </p>
@@ -39,13 +39,15 @@ export default function Footer() {
 
       {footerLinks.map((section) => (
         <div key={section.title}>
-          <h3 className="mb-2 font-semibold">{section.title}</h3>
-          <ul className="space-y-1">
+          <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-white">
+            {section.title}
+          </h3>
+          <ul className="space-y-2">
             {section.links.map((link) => (
               <li key={link.href} className="text-sm">
                 <Link
                   href={link.href}
-                  className="text-muted-foreground hover:text-foreground hover:underline"
+                  className="text-white/65 transition-colors hover:text-white"
                 >
                   {link.label}
                 </Link>
