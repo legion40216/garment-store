@@ -62,7 +62,7 @@ export default function AddToCart({
                 onClick={() => handleSizeChange(option.size)}
                 className={`min-w-11 ${
                   isSelected
-                    ? "bg-style-blue-600 text-white hover:bg-style-blue-400"
+                    ? "bg-brand-primary text-brand-white hover:bg-brand-black"
                     : ""
                 } ${isSizeInStock(option) ? "" : "line-through"}`}
               >
@@ -115,7 +115,7 @@ export default function AddToCart({
         <Button
           type="button"
           size="lg"
-          className="h-12 min-h-12 flex-1 bg-style-blue-600 text-white text-sm font-semibold uppercase tracking-wide hover:bg-style-blue-400"
+          className="h-12 min-h-12 flex-1 bg-brand-primary text-brand-white text-sm font-semibold uppercase tracking-wide hover:bg-brand-black"
           disabled={stock === 0 || inCart}
           onClick={handleAdd}
         >
