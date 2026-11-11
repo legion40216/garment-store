@@ -61,8 +61,10 @@ export default function AddToCart({
                 disabled={!isSizeInStock(option) && !isSelected}
                 onClick={() => handleSizeChange(option.size)}
                 className={`min-w-11 ${
-                  isSizeInStock(option) ? "" : "line-through"
-                }`}
+                  isSelected
+                    ? "bg-brand-primary text-brand-white hover:bg-brand-black"
+                    : ""
+                } ${isSizeInStock(option) ? "" : "line-through"}`}
               >
                 {option.size}
               </Button>
@@ -113,7 +115,7 @@ export default function AddToCart({
         <Button
           type="button"
           size="lg"
-          className="flex-1"
+          className="h-12 min-h-12 flex-1 bg-brand-primary text-brand-white text-sm font-semibold uppercase tracking-wide hover:bg-brand-black"
           disabled={stock === 0 || inCart}
           onClick={handleAdd}
         >

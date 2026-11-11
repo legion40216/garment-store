@@ -35,20 +35,19 @@
   --text-5xl: 3rem;
   --text-6xl: 3.75rem; */
 
-  /* =========================
-     Style Guide Colors
-     ========================= */
-
-  --color-style-neutral-900: var(--style-neutral-900);
-  --color-style-neutral-800: var(--style-neutral-800);
-  --color-style-neutral-500: var(--style-neutral-500);
-  --color-style-neutral-400: var(--style-neutral-400);
-  --color-style-neutral-0: var(--style-neutral-0);
-  --color-style-blue-600: var(--style-blue-600);
-  --color-style-blue-400: var(--style-blue-400);
-  --color-style-red-500: var(--style-red-500);
-  --color-style-green-500: var(--style-green-500);
-  --color-style-yellow-400: var(--style-yellow-400);
+  /* Original React Clothing brand palette */
+  --color-brand-white: var(--brand-white);
+  --color-brand-off-white: var(--brand-off-white);
+  --color-brand-light: var(--brand-light);
+  --color-brand-black: var(--brand-black);
+  --color-brand-muted: var(--brand-muted);
+  --color-brand-border: var(--brand-border);
+  --color-brand-border-muted: var(--brand-border-muted);
+  --color-brand-coral: var(--brand-coral);
+  --color-brand-red: var(--brand-red);
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-primary-soft: var(--brand-primary-soft);
+  --color-brand-green: var(--brand-green);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -176,20 +175,19 @@
 
   /* font-size: 16px; */
 
-  /* =========================
-     Style Guide Colors
-     ========================= */
-
-  --style-neutral-900: hsl(0 0% 7%);
-  --style-neutral-800: hsl(0 0% 15%);
-  --style-neutral-500: hsl(240 3% 46%);
-  --style-neutral-400: hsl(240 1% 59%);
-  --style-neutral-0: hsl(0 0% 100%);
-  --style-blue-600: hsl(214 100% 55%);
-  --style-blue-400: hsl(210 100% 65%);
-  --style-red-500: hsl(354 63% 57%);
-  --style-green-500: hsl(140 63% 57%);
-  --style-yellow-400: hsl(49 85% 70%);
+  /* Original React Clothing brand palette */
+  --brand-white: hsl(0 0% 100%);
+  --brand-off-white: hsl(0 0% 92%);
+  --brand-light: hsl(0 0% 98%);
+  --brand-black: hsl(0 0% 14%);
+  --brand-muted: hsl(0 0% 43%);
+  --brand-border: hsl(0deg 0% 85%);
+  --brand-border-muted: hsla(0 0% 43% / 45.2%);
+  --brand-coral: hsl(7 81% 61%);
+  --brand-red: hsl(1deg 77% 55%);
+  --brand-primary: hsl(212 100% 18%);
+  --brand-primary-soft: hsl(212deg 100% 18% / 20%);
+  --brand-green: hsl(120 83% 44%);
 }
 
 @layer base {
